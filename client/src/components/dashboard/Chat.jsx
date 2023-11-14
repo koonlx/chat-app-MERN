@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { getMessagesRoute, sendMessageRoute } from '../../utils/APIRoutes';
@@ -8,15 +8,15 @@ export default function Chat({ socket, selectedRoom, currentUser }) {
   const [chat, setChat] = useState([]);
   const room = selectedRoom;
   const roomId = room._id;
+  const scrollRef = useRef();
 
   const fetchMessages = async (roomId) => {
     try {
       const response = await axios.get(getMessagesRoute, {
         params: { roomId: roomId },
       });
-      console.log(response.data);
-      const messageData = response.data
-      setChat((prev) => [...prev, ...messageData]);
+      const messageData = response.data;
+      setChat(messageData);
     } catch (error) {
       console.error('Error fetching messages: ', error);
     }
@@ -49,11 +49,15 @@ export default function Chat({ socket, selectedRoom, currentUser }) {
     fetchMessages(roomId);
   }, [roomId]);
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'instant' });
+  }, [chat]);
+
   return (
     <ChatContainer>
       <h2>{selectedRoom.name}</h2>
       {chat.map((messageObject, index) => (
-        <p key={index}>
+        <p key={index} ref={index === chat.length - 1 ? scrollRef : null}>
           {messageObject.sender.username} : {messageObject.message}
         </p>
       ))}

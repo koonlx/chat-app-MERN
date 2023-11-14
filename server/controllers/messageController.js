@@ -40,7 +40,7 @@ module.exports.getMessages = async (req, res, next) => {
       })
     );
 
-    res.json(messagesWithSenderInfo)
+    res.json(messagesWithSenderInfo);
   } catch (ex) {
     next(ex);
   }

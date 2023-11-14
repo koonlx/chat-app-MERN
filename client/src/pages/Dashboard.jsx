@@ -60,7 +60,7 @@ export default function Dashboard() {
 const DashboardContainer = styled.main`
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  width: 100vw;
+  height: 80vh;
+  width: 100%;
   align-items: stretch;
 `;
