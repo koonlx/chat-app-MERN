@@ -17,11 +17,11 @@ export default function Login() {
     theme: 'dark',
   };
   useEffect(() => {
-    const key = localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+    const key = localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY);
     if (key) {
       navigate('/');
     }
-  }, []);
+  }, [navigate]);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -30,10 +30,10 @@ export default function Login() {
   const validateForm = () => {
     const { username, password } = values;
     if (username === '') {
-      toast.error('Email and Password is required.', toastOptions);
+      toast.error('Username and Password is required.', toastOptions);
       return false;
     } else if (password === '') {
-      toast.error('Email and Password is required.', toastOptions);
+      toast.error('Username and Password is required.', toastOptions);
       return false;
     }
     return true;
@@ -65,6 +65,7 @@ export default function Login() {
     <>
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
+          <p>LOGIN</p>
           <input
             type="text"
             placeholder="Username"
@@ -87,6 +88,52 @@ export default function Login() {
 }
 
 const FormContainer = styled.main`
-  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  background-color: #faf6f0;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  form {
+    p {
+      color: #f4dfc8;
+      text-align: center;
+      font-size: 2rem;
+    }
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: black;
+    border-radius: 2rem;
+    padding: 5rem;
+  }
+  input {
+    background-color: transparent;
+    padding: 1rem;
+    border: 0.1rem solid #faf6f0;
+    border-radius: 0.4rem;
+    color: #f4eae4;
+    width: 100%;
+    font-size: 1rem;
+    &:focus {
+      border: 0.1rem solid #f4dfc8;
+      outline: none;
+    }
+  }
+  button {
+    background-color: #f4dfc8;
+    color: black;
+    padding: 1rem 2rem;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    &:hover {
+      background-color: black;
+      color: white;
+      outline: 2px solid #f4dfc8;
+    }
+  }
 `;

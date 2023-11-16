@@ -1,4 +1,5 @@
 const Room = require('../models/roomModel');
+const Message = require('../models/messageModel');
 
 module.exports.room = async (req, res, next) => {
   try {
@@ -8,13 +9,16 @@ module.exports.room = async (req, res, next) => {
 
     if (existingRoom) {
       if (existingRoom.participants.includes(user._id)) {
-        return res.json({ message: 'User is already in this room', status: false})
+        return res.json({
+          message: 'User is already in this room',
+          status: false,
+        });
       }
       if (!existingRoom.participants.includes(user._id)) {
         existingRoom.participants.push(user._id);
         await existingRoom.save();
       }
-        return res.json({ message: 'Joined room successfully', status: true });
+      return res.json({ message: 'Joined room successfully', status: true });
     } else {
       const newRoom = new Room({ name: roomName });
       newRoom.participants.push(user._id);
@@ -36,6 +40,32 @@ module.exports.getRooms = async (req, res, next) => {
       }
       return res.json({ rooms });
     });
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.removeUserFromRoom = async (req, res, next) => {
+  try {
+    const { roomId, userId } = req.body;
+    console.log(userId);
+    const room = await Room.findByIdAndUpdate(
+      roomId,
+      { $pull: { participants: userId } },
+      { new: true }
+    );
+
+    if (!room) {
+      return res.json({ message: 'Room not found', status: false });
+    }
+
+    if (room.participants.length === 0) {
+      await Room.findOneAndDelete(roomId);
+      await Message.deleteMany({ room: roomId });
+      return res.json({ message: 'Room deleted as participants list is empty', status: true });
+    }
+
+    return res.json({ message: 'User removed from the room', status: true });
   } catch (ex) {
     next(ex);
   }

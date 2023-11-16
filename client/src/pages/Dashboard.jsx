@@ -27,7 +27,7 @@ export default function Dashboard() {
       setCurrentUser(data);
     };
     fetchUser();
-  }, []);
+  }, [navigate]);
 
   const handleRoomSelection = (room) => {
     setSelectedRoom(room);
@@ -63,4 +63,5 @@ const DashboardContainer = styled.main`
   height: 80vh;
   width: 100%;
   align-items: stretch;
+  border: 1px solid #F4DFC8;
 `;

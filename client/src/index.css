@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Mooli', sans-serif;
-  background: whitesmoke;
+  background: rgb(10, 10, 10);
 }
 
 main {

@@ -9,6 +9,6 @@ const FooterContainer = styled.footer`
   display: flex;
   flex-direction: row-reverse;
   background-color: black;
-  color: #ff59c7;
+  color: #F4DFC8;
   padding: 1rem;
 `;

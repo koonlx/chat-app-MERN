@@ -27,6 +27,6 @@ const ProfileContainer = styled.div`
   justify-content: center;
   margin-top: 10px;
   padding-bottom: 5px;
-  border-bottom: 1px solid #ff59c7;
+  border-bottom: 1px solid #F4DFC8;
 
 `;

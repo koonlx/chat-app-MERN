@@ -74,11 +74,7 @@ io.on('connection', (socket) => {
     addUserToRooms(userId, socket);
   });
 
-  socket.on('join-room', (data) => {
-  })
-
   socket.on('send-message', ({ message, roomId, sender }) => {
-    // console.log(message);
     if (roomId) {
       socket.to(roomId).emit('message-from-server', { message, sender });
     }

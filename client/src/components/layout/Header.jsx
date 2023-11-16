@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import '../../sources/css/button.css';
@@ -24,7 +24,7 @@ export default function Header() {
       <div className="title">Chat App</div>
       {user ? (
         <button
-          className="logout w-btn w-btn-gra2 w-btn-gra-anim"
+          className="logout"
           onClick={() => {
             localStorage.clear();
             navigate('/login');
@@ -36,9 +36,11 @@ export default function Header() {
         <Link
           to={isLoginPage ? '/register' : '/login'}
           onClick={handlePage}
-          className="login w-btn w-btn-gra2 w-btn-gra-anim"
+          className="login"
         >
+          <button>
           {isLoginPage ? 'Sign Up' : 'Sign In'}
+          </button>
         </Link>
       )}
     </HeaderContainer>
@@ -54,10 +56,28 @@ const HeaderContainer = styled.header`
   align-items: center;
   background-color: black;
   height: 75px;
-  color: #ff59c7;
+  color: #F4DFC8;
+
+  button {
+    border: none;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    background-color: #f4eae0;
+    color: black;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+      background-color: black;
+      color: white;
+      outline: 2px solid #f4dfc8;
+    }
+  }
   .login {
     margin-right: 30px;
-    color: white;
+    /* color: #F4DFC8; */
   }
   .title {
     margin-left: 30px;

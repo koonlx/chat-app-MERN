@@ -52,7 +52,6 @@ export default function RoomList({ socket, onRoomSelected }) {
       fetchRooms();
       if (socket) {
         socket.emit('login', user._id);
-        socket.emit('join-room', onRoomSelected, user.username);
       }
     } else {
       toast.error(data.message, toastOptions);
@@ -75,7 +74,9 @@ export default function RoomList({ socket, onRoomSelected }) {
             value={roomName}
             onChange={handleInputChange}
           />
-          <button onClick={handleCreateRoom}>Create Room</button>
+          <button className="cre-r-btn" onClick={handleCreateRoom}>
+            Create Room
+          </button>
         </form>
       </div>
       <div className="border_bottom room-list">
@@ -99,20 +100,58 @@ export default function RoomList({ socket, onRoomSelected }) {
 
 const RoomListContainer = styled.div`
   background-color: black;
-  color: #ff59c7;
+  color: #f4dfc8;
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  border-top: 1px solid #f4dfc8;
+  border-left: 1px solid #f4dfc8;
+  border-bottom: 1px solid #f4dfc8;
+
+  input {
+    width: 90%;
+    margin-left: 20px;
+    border: none;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+    outline: none;
+
+    ::placeholder {
+      color: #999;
+    }
+  }
+  .cre-r-btn {
+    width: 90%;
+    border: none;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #f4eae0;
+    color: black;
+    cursor: pointer;
+    outline: none;
+  }
+
+  button {
+    color: black;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f4eae0;
+  }
+
   .border_bottom {
-    border-bottom: 1px solid #ff59c7;
+    border-bottom: 1px solid #f4dfc8;
     padding: 10px;
   }
   .item {
     cursor: pointer;
   }
   .selected {
-    background-color: #ff59c7;
+    background-color: #f4dfc8;
     color: black;
   }
   .flex-item:last-child {
