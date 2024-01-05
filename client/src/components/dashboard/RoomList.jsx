@@ -136,11 +136,20 @@ const RoomListContainer = styled.div`
   }
 
   button {
-    color: black;
-    padding: 10px;
+    width: 10%;
     border: none;
     border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: #f4eae0;
+    color: black;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+      background-color: black;
+      color: white;
+      outline: 2px solid #f4dfc8;
+    }
   }
 
   .border_bottom {

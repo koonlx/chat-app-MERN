@@ -31,7 +31,7 @@ const InputContainer = styled.div`
   border-top: 1px solid #f4dfc8;
   padding: 3px;
   input {
-    width: 80%;
+    width: 70%;
     margin-left: 25px;
     border: none;
     border-radius: 20px;
