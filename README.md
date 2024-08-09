@@ -108,6 +108,8 @@ chat-app-MERN
    `.env`파일을 생성하고 MongoDB URI 설정
    ```bash
    MONGO_URI=<MongoDB URI>
+   PORT=<Port Number>
+   REACT_BUILD_PATH=<React Build Path>
    ```
    서버 실행:
    ```bash
