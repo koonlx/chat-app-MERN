@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import styled from 'styled-components';
 import { loginRoute } from '../utils/APIRoutes';
 
 export default function Login() {

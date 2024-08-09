@@ -1,7 +1,10 @@
+// dotenv config setting
+require('dotenv').config();
 // import
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
+// const path = require('path');
 
 const Room = require('./models/roomModel');
 
@@ -9,7 +12,8 @@ const app = express();
 const httpServer = http.createServer(app);
 const io = socketIO(httpServer, {
   cors: {
-    origin: ['http://localhost:3000'],
+    origin: ['*'],
+    methods: ['*'],
     credentials: true,
   },
 });
@@ -18,11 +22,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 //middleware
+// app.use(express.static(path.join(__dirname, process.env.REACT_BUILD_PATH)));
 app.use(cors());
 app.use(express.json());
-
-// dotenv config setting
-require('dotenv').config();
 
 //Routing
 const authRoutes = require('./routes/auth');
