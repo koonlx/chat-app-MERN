@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Profile from './Profile';
 import axios from 'axios';
@@ -11,14 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function RoomList({ socket, onRoomSelected }) {
    const userData = localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY);
    const user = JSON.parse(userData);
-   const navigate = useNavigate();
-
-   // user가 존재하지 않는 경우 /login으로 리다이렉트
-   useEffect(() => {
-      if (!user) {
-         navigate('/login');
-      }
-   }, [user, navigate]);
 
    //error message layout
    const toastOptions = {
@@ -42,7 +33,7 @@ export default function RoomList({ socket, onRoomSelected }) {
       } catch (error) {
          console.error('Error fetching rooms:', error);
       }
-   }, [user]);
+   }, [user._id]);
 
    const handleRoomClick = room => {
       setSelectedRoom(room);
@@ -71,10 +62,6 @@ export default function RoomList({ socket, onRoomSelected }) {
    useEffect(() => {
       fetchRooms();
    }, [fetchRooms]);
-
-   if (!user) {
-      return null; // user가 없을 때 컴포넌트를 렌더링하지 않음
-   }
 
    return (
       <RoomListContainer>
