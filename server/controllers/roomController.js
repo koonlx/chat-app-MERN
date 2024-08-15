@@ -49,6 +49,7 @@ module.exports.removeUserFromRoom = async (req, res, next) => {
   try {
     const { roomId, userId } = req.body;
     console.log(roomId, userId);
+
     const room = await Room.findByIdAndUpdate(
       roomId,
       { $pull: { participants: userId } },
@@ -56,11 +57,11 @@ module.exports.removeUserFromRoom = async (req, res, next) => {
     );
 
     if (!room) {
-      return res.json({ message: 'Room not found', status: false });
+      return res.status(404).json({ message: 'Room not found', status: false });
     }
 
     if (room.participants.length === 0) {
-      await Room.findOneAndDelete(roomId);
+      await Room.findByIdAndDelete(roomId);
       await Message.deleteMany({ room: roomId });
       return res.json({
         message: 'Room deleted as participants list is empty',
@@ -70,6 +71,7 @@ module.exports.removeUserFromRoom = async (req, res, next) => {
 
     return res.json({ message: 'User removed from the room', status: true });
   } catch (ex) {
-    next(ex);
+    console.error(ex);
+    return res.status(500).json({ message: 'Internal server error', status: false });
   }
 };

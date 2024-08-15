@@ -10,58 +10,54 @@ import { io } from 'socket.io-client';
 import { host } from '../utils/APIRoutes';
 
 export default function Dashboard() {
-  const [socket, setSocket] = useState(null);
-  const [selectedRoom, setSelectedRoom] = useState(undefined);
-  const [currentUser, setCurrentUser] = useState(undefined);
+   const [socket, setSocket] = useState(null);
+   const [selectedRoom, setSelectedRoom] = useState(undefined);
+   const [currentUser, setCurrentUser] = useState(undefined);
 
-  const navigate = useNavigate();
+   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const data = await JSON.parse(
-        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-      );
-      if (!data) {
-        navigate('/login');
-      }
-      setCurrentUser(data);
-    };
-    fetchUser();
-  }, [navigate]);
+   useEffect(() => {
+      const fetchUser = async () => {
+         const data = await JSON.parse(localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY));
+         if (!data) {
+            navigate('/login');
+         }
+         setCurrentUser(data);
+      };
+      fetchUser();
+   }, [navigate]);
 
-  const handleRoomSelection = (room) => {
-    setSelectedRoom(room);
-  };
+   const handleRoomSelection = room => {
+      setSelectedRoom(room);
+   };
 
-  useEffect(() => {
-    setSocket(io(host));
-  }, []);
+   useEffect(() => {
+      setSocket(io(host));
+   }, []);
 
-  useEffect(() => {
-    if (currentUser) socket.emit('login', currentUser._id);
-  }, [currentUser, socket]);
+   useEffect(() => {
+      if (currentUser) socket.emit('login', currentUser._id);
+   }, [currentUser, socket]);
 
-  return (
-    <DashboardContainer>
-      <RoomList socket={socket} onRoomSelected={handleRoomSelection} />
-      {selectedRoom === undefined ? (
-        <Undefined />
-      ) : (
-        <Chat
-          socket={socket}
-          selectedRoom={selectedRoom}
-          currentUser={currentUser}
-        />
-      )}
-    </DashboardContainer>
-  );
+   if (!currentUser) return null;
+
+   return (
+      <DashboardContainer>
+         <RoomList socket={socket} onRoomSelected={handleRoomSelection} />
+         {selectedRoom === undefined ? (
+            <Undefined />
+         ) : (
+            <Chat socket={socket} selectedRoom={selectedRoom} currentUser={currentUser} />
+         )}
+      </DashboardContainer>
+   );
 }
 
 const DashboardContainer = styled.main`
-  display: flex;
-  flex-direction: row;
-  height: 80vh;
-  width: 100%;
-  align-items: stretch;
-  border: 1px solid #F4DFC8;
+   display: flex;
+   flex-direction: row;
+   height: 80vh;
+   width: 100%;
+   align-items: stretch;
+   border: 1px solid #f4dfc8;
 `;
